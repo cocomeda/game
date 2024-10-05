@@ -1,293 +1,116 @@
-<!DOCTYPE html>
+
+     
+
+   <!DOCTYPE html>
 <html lang="ja">
 <head>
-     <link rel="icon" href="https://raw.githubusercontent.com/cocomeda/game/main/favicon.jpg" type="image/x-icon">
-
+<link rel="icon" href="https://raw.githubusercontent.com/cocomeda/game/main/favicon.jpg" type="image/x-icon">
+     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gravity Simulation with Controls</title>
+    <title>音声再生</title>
     <style>
-        canvas {
-            background-color: #fff;
-            display: block;
-            margin: 0;
-            padding: 0;
-            width: 100vw;
-            height: 80vh;
+        body {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 10px;
+            box-sizing: border-box;
         }
-        #info {
-            position: absolute;
-            top: 4vw;
-            left: 4vw;
-            background: rgba(255, 255, 255, 0.8);
-            font-size:2vw;
-            padding: 1vw;
-            border-radius: 0.5vw;
-            z-index: 1;
-        }
-        #massSlider {
-            width: 35vw;
+        button {
+            width: calc((100% / 3) - 1vw); /* 画面の横幅を3つに分ける */
+            height: calc((100vw / 3) - 1vw); /* 高さを設定して正方形にする */
+            margin-bottom: 1vw; /* 縦の隙間 */
+            background-color: black; /* ボタンの背景色 */
+            color: white; /* ボタンの文字色 */
+            border: none; /* ボタンの枠線を非表示 */
+            font-size: 15vw; /* ボタンの文字サイズを大きく */
+            cursor: pointer; /* カーソルをポインタに */
+            display: flex; /* フレックスボックスを使用 */
+            align-items: center; /* 縦方向に中央揃え */
+            justify-content: center; /* 横方向に中央揃え */
+            text-align: center; /* 文字を中央揃え */
+            line-height: 1; /* 行の高さを1に設定 */
         }
     </style>
 </head>
 <body>
+    <button id="playButton1">さ</button>
+    <button id="playButton2">し</button>
+    <button id="playButton3">す</button>
+    <button id="playButton4">せ</button>
+    <button id="playButton5">そ</button>
+    <button id="playButton6">わ</button>
+    <button id="playButton7">あ</button>
+    <button id="playButton8">い</button>
+    <button id="playButton9">な</button>
+    <button id="playButton10">え</button>
+    <button id="playButton11">お</button>
+    <button id="playButton12">き</button>
 
-<div id="info">
-    <h3>Simulation Info</h3>
-    <p>Number of Planets: <span id="planetCount">0</span></p>
-    <p>Max Planet Mass: <span id="maxMass">0</span></p>
-    <p>Max Distance from Largest Planet: <span id="maxDistance">0</span></p>
-    <label for="massSlider">Set Planet Mass: <span id="massValue">0.3</span></label>
-  <br>
-    <input type="range" id="massSlider" min="0.1" max="30" step="0.1" value="0.3">
-</div>
+    <audio id="audio1" src="sa.wav"></audio>
+    <audio id="audio2" src="shi.wav"></audio>
+    <audio id="audio3" src="su.wav"></audio>
+    <audio id="audio4" src="se.wav"></audio>
+    <audio id="audio5" src="so.wav"></audio>
+    <audio id="audio6" src="wa.wav"></audio>
+   <audio id="audio7" src="a.wav"></audio>
+    <audio id="audio8" src="i.wav"></audio>
+    <audio id="audio9" src="na.wav"></audio>
+    <audio id="audio10" src="e.wav"></audio>
+    <audio id="audio11" src="o.wav"></audio>
+    <audio id="audio12" src="ki.wav"></audio>
 
-<canvas id="gravityCanvas"></canvas>
 
-<script>
-    const canvas = document.getElementById('gravityCanvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight * 0.8;
+    <script>
+        document.getElementById('playButton1').addEventListener('click', function() {
+            document.getElementById('audio1').play();
+        });
+        document.getElementById('playButton2').addEventListener('click', function() {
+            document.getElementById('audio2').play();
+        });
+        document.getElementById('playButton3').addEventListener('click', function() {
+            document.getElementById('audio3').play();
+        });
+        document.getElementById('playButton4').addEventListener('click', function() {
+            document.getElementById('audio4').play();
+        });
+        document.getElementById('playButton5').addEventListener('click', function() {
+            document.getElementById('audio5').play();
+        });
+        document.getElementById('playButton6').addEventListener('click', function() {
+            document.getElementById('audio6').play();
+        });
 
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight * 0.8;
-    });
 
-    const mass_ini = 0.3;
-    const G = 0.1;
-    const planets = [];
-    let explosions = [];
 
-    class Planet {
-        constructor(x, y, mass, color, velocity) {
-            this.x = x;
-            this.y = y;
-            this.mass = mass;
-            this.color = color;
-            this.radius = Math.sqrt(this.mass) * 2;
-            this.velocity = velocity || { x: 0, y: 0 };
-        }
+        document.getElementById('playButton7').addEventListener('click', function() {
+            document.getElementById('audio7').play();
+        });
+        document.getElementById('playButton8').addEventListener('click', function() {
+            document.getElementById('audio8').play();
+        });
+        document.getElementById('playButton9').addEventListener('click', function() {
+            document.getElementById('audio9').play();
+        });
+        document.getElementById('playButton10').addEventListener('click', function() {
+            document.getElementById('audio10').play();
+        });
+        document.getElementById('playButton11').addEventListener('click', function() {
+            document.getElementById('audio11').play();
+        });
+        document.getElementById('playButton12').addEventListener('click', function() {
+            document.getElementById('audio12').play();
+        });
 
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = this.color;
-            ctx.fill();
-            ctx.closePath();
-        }
 
-        update() {
-            for (let planet of planets) {
-                if (planet !== this) {
-                    const dx = planet.x - this.x;
-                    const dy = planet.y - this.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < this.radius + planet.radius) {
-                        this.merge(planet);
-                    } else {
-                        const force = (G * this.mass * planet.mass) / (distance * distance);
-                        const ax = (force * dx) / distance / this.mass;
-                        const ay = (force * dy) / distance / this.mass;
-
-                        this.velocity.x += ax;
-                        this.velocity.y += ay;
-                    }
-                }
-            }
-
-            this.x += this.velocity.x;
-            this.y += this.velocity.y;
-        }
-
-        merge(planet) {
-            const totalMass = this.mass + planet.mass;
-
-            this.x = (this.x * this.mass + planet.x * planet.mass) / totalMass;
-            this.y = (this.y * this.mass + planet.y * planet.mass) / totalMass;
-
-            this.velocity.x = (this.velocity.x * this.mass + planet.velocity.x * planet.mass) / totalMass;
-            this.velocity.y = (this.velocity.y * this.mass + planet.velocity.y * planet.mass) / totalMass;
-
-            this.mass = totalMass;
-            this.radius = Math.sqrt(this.mass) * 2;
-
-            const explosionRadius = Math.min(this.radius, planet.radius);
-            explosions.push(new Explosion(this.x, this.y, explosionRadius));
-
-            const index = planets.indexOf(planet);
-            if (index > -1) {
-                planets.splice(index, 1);
-            }
-        }
-    }
-
-    class Explosion {
-        constructor(x, y, radius) {
-            this.x = x;
-            this.y = y;
-            this.radius = radius * 2;
-            this.alpha = 1;
-            this.life = 30;
-        }
-
-        update() {
-            this.radius += 0.5;
-            this.alpha -= 1 / this.life;
-        }
-
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 165, 0, ${this.alpha})`;
-            ctx.fill();
-            ctx.closePath();
-        }
-
-        isAlive() {
-            return this.alpha > 0;
-        }
-    }
-
-    function addPlanet(x, y, velocity) {
-        const mass = parseFloat(document.getElementById('massSlider').value);
-        const color = planets.length === 0 ? 'red' : 'blue';
-        planets.push(new Planet(x, y, mass, color, velocity));
-
-        // Update the information display
-        updateInfoDisplay();
-    }
-
-    function updateInfoDisplay() {
-        const planetCount = planets.length;
-        document.getElementById('planetCount').textContent = planetCount;
-
-        if (planetCount > 0) {
-            const maxMass = Math.max(...planets.map(p => p.mass));
-            document.getElementById('maxMass').textContent = maxMass.toFixed(2);
-
-            const maxPlanet = planets.find(p => p.mass === maxMass);
-            const maxDistance = Math.max(...planets.map(p => Math.sqrt((p.x - maxPlanet.x) ** 2 + (p.y - maxPlanet.y) ** 2)));
-            document.getElementById('maxDistance').textContent = maxDistance.toFixed(2);
-        } else {
-            document.getElementById('maxMass').textContent = '0';
-            document.getElementById('maxDistance').textContent = '0';
-        }
-    }
-
-    let startX, startY, isDragging = false;
-
-    // マウスとタッチイベントを処理する関数
-    function getPointerPosition(e) {
-        if (e.touches && e.touches.length > 0) {
-            return { x: e.touches[0].clientX, y: e.touches[0].clientY };
-        } else if (e.changedTouches && e.changedTouches.length > 0) {
-            return { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
-        } else {
-            return { x: e.clientX, y: e.clientY };
-        }
-    }
-
-    // マウス押下
-    canvas.addEventListener('mousedown', (e) => {
-        const pos = getPointerPosition(e);
-        startX = pos.x;
-        startY = pos.y;
-        isDragging = true;
-    });
-
-    // マウス移動
-    canvas.addEventListener('mousemove', (e) => {
-        if (isDragging) {
-            const pos = getPointerPosition(e);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            planets.forEach(planet => planet.draw());
-            ctx.beginPath();
-            ctx.moveTo(startX, startY);
-            ctx.lineTo(pos.x, pos.y);
-            ctx.strokeStyle = '#000';
-            ctx.stroke();
-        }
-    });
-
-    // マウスリリース
-    canvas.addEventListener('mouseup', (e) => {
-        if (isDragging) {
-            const pos = getPointerPosition(e);
-            const velocityX = (pos.x - startX) * 0.1;
-            const velocityY = (pos.y - startY) * 0.1;
-            addPlanet(startX, startY, { x: velocityX, y: velocityY });
-            isDragging = false;
-        }
-    });
-
-    // タッチ開始
-    canvas.addEventListener('touchstart', (e) => {
-        const pos = getPointerPosition(e);
-        startX = pos.x;
-        startY = pos.y;
-        isDragging = true;
-    });
-
-    // タッチ移動
-    canvas.addEventListener('touchmove', (e) => {
-        if (isDragging) {
-            const pos = getPointerPosition(e);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            planets.forEach(planet => planet.draw());
-            ctx.beginPath();
-            ctx.moveTo(startX, startY);
-            ctx.lineTo(pos.x, pos.y);
-            ctx.strokeStyle = '#000';
-            ctx.stroke();
-        }
-    });
-
-    // タッチ終了
-    canvas.addEventListener('touchend', (e) => {
-        if (isDragging) {
-            const pos = getPointerPosition(e);
-            const velocityX = (pos.x - startX) * 0.1;
-            
-            
-const velocityY = (pos.y - startY) * 0.1;
-            addPlanet(startX, startY, { x: velocityX, y: velocityY });
-            isDragging = false;
-        }
-    });
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        for (let planet of planets) {
-            planet.update();
-            planet.draw();
-        }
-
-        // Update explosions
-        for (let explosion of explosions) {
-            explosion.update();
-            explosion.draw();
-        }
-
-        // Remove dead explosions
-        explosions = explosions.filter(explosion => explosion.isAlive());
-
-        // Update the information display
-        updateInfoDisplay();
-
-        requestAnimationFrame(animate);
-    }
-
-    // スライダーの値を表示
-    document.getElementById('massSlider').addEventListener('input', (e) => {
-        document.getElementById('massValue').textContent = e.target.value;
-    });
-
-    animate();
-</script>
+    </script>
 </body>
 </html>
+
+
+
+
+
+
 
